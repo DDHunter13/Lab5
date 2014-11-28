@@ -3,41 +3,57 @@
 #include <string>
 #include <algorithm>
 
+int size = 10;
+
 class Data {
 private:
-		// Предмет в виде строки
-		std::string item;
-
+		// Предметы в виде строк
+	std::string *item = new std::string[size];
+	int number = 0;
 public:
 		// Вывод содержимого
-		std::string get_item() {
-			return item;
-		}
+	std::string get_item(const int num) {
+		return item[num];
+	}
 
 		// Вставка предмета
-		void set_item(std::string r_item) {
-			item = r_item;
+	void set_item(std::string r_item) {
+		item[number++] = r_item;
+	}
+	
+		// Поиск предмета
+	void find_item(std::string f_item) {
+		for (int i = 0; i < size; ++i) {
+			if (item[i] == f_item) {
+				std::cout << i << ' ';
+			}
 		}
+		std::cout << std::endl;
+	}
 
 		// Удаление предмета
-		void delete_item() {
-			item = ' ';
+	void delete_item(std::string d_item) {
+		for (int i = 0; i < size; ++i) {
+			if (item[i] == d_item) {
+				item[i] = "";
+			}
 		}
-
-		// Поиск предмета
-
+	}
 
 		// Контсруктор
-		Data() {
-			item = ' ';
+	Data() {
+		for (int k = 0; k < size; ++k) {
+			item[k] = " ";
 		}
+	}
 
 		// Деструктор
-		~Data() {
-			std::cout << "Item has been destroyed" << std::endl;
-		}
+	~Data() {
+		std::cout << "Data has been destroyed" << std::endl;
+	}
+
 };
 
 int main() {
-	Data items[10];
+	return 0;
 }
