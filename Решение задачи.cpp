@@ -9,7 +9,9 @@ class Data {
 private:
 		// Предметы в виде строк
 	std::string *item = new std::string[size];
+		// Номер для размещения нового предмета в массиве
 	int number = 0;
+
 public:
 		// Вывод содержимого
 	std::string get_item(const int num) {
@@ -19,6 +21,10 @@ public:
 		// Вставка предмета
 	void set_item(std::string r_item) {
 		item[number++] = r_item;
+		if (number == size) {
+			size *= 2;
+			std::string realloc(std::string *item, const int size);
+		}
 	}
 	
 		// Поиск предмета
@@ -53,7 +59,3 @@ public:
 	}
 
 };
-
-int main() {
-	return 0;
-}
