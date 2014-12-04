@@ -3,14 +3,14 @@
 #include <string>
 #include <algorithm>
 
-int size = 10;
+
 
 class Data {
+
 private:
-		// Предметы в виде строк
-	std::string *item = new std::string[size];
-		// Номер для размещения нового предмета в массиве
-	int number = 0;
+	std::string *item;
+	int number;
+	int size = 10;
 
 public:
 		// Вывод содержимого
@@ -19,42 +19,58 @@ public:
 	}
 
 		// Вставка предмета
-	void set_item(std::string r_item) {
-		item[number++] = r_item;
+	void set_item(const std::string *r_item) {
+		item[number++] = *r_item;
 		if (number == size) {
 			size *= 2;
-			std::string realloc(std::string *item, const int size);
+			void *realloc(void *item, size_t size);
 		}
 	}
 	
 		// Поиск предмета
-	void find_item(std::string f_item) {
+	int find_item(const std::string *f_item) {
 		for (int i = 0; i < size; ++i) {
-			if (item[i] == f_item) {
-				std::cout << i << ' ';
+			if (item[i] == *f_item) {
+				return 0;
 			}
 		}
-		std::cout << std::endl;
+		return -1;
 	}
 
-		// Удаление предмета
-	void delete_item(std::string d_item) {
+		// Удаление первого найденного предмета
+	int first_delete_item(const std::string *f_d_item) {
 		for (int i = 0; i < size; ++i) {
-			if (item[i] == d_item) {
+			if (item[i] == *f_d_item) {
 				item[i] = "";
+				return 0;
 			}
 		}
+		return -1;
+	}
+
+	// Удаление найденных предметов
+	int delete_item(const std::string *d_item) {
+		int flag = -1;
+		for (int i = 0; i < size; ++i) {
+			if (item[i] == *d_item) {
+				item[i] = "";
+				flag = 0;
+			}
+		}
+		return flag;
 	}
 
 		// Контсруктор
 	Data() {
-		for (int k = 0; k < size; ++k) {
-			item[k] = " ";
-		}
+		// Предметы в виде строк
+		item = new std::string[size];
+		// Номер для размещения нового предмета в массиве
+		number = 0;	
 	}
 
 		// Деструктор
 	~Data() {
+		delete[] item;
 		std::cout << "Data has been destroyed" << std::endl;
 	}
 
