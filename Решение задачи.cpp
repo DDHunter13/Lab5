@@ -1,5 +1,4 @@
 #include <iostream>
-#include <locale.h>
 #include <string>
 #include <algorithm>
 
@@ -8,8 +7,8 @@
 class Data {
 
 private:
-	std::string *item;
-	std::string *newitem;
+	std::string *item = NULL;
+	std::string *newitem = NULL;
 	int number;
 	int size = 10;
 
@@ -54,9 +53,11 @@ public:
 	int first_delete_item(const std::string *f_d_item) {
 		for (int i = 0; i < size; ++i) {
 			if (item[i] == *f_d_item) {
-				for (int j = i; j < size + 1; ++j) {
+				for (int j = i; j < size - 1; ++j) {
 					item[j] = item[j + 1];
 				}
+				item[size - 1] = "";
+				--number;
 				return 1;
 			}
 		}
@@ -71,8 +72,10 @@ public:
 				for (int j = i; j < size + 1; ++j) {
 					item[j] = item[j + 1];
 				}
-				flag = 1;
+				item[size - 1] = "";
+				--number;
 				--i;
+				flag = 1;
 			}
 		}
 		return flag;
