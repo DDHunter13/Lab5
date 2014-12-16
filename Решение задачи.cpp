@@ -9,14 +9,16 @@ class Data {
 private:
 	std::string *item = NULL;
 	std::string *newitem = NULL;
+	std::string Error = "Error";
 	int number;
 	int size = 10;
 
 public:
 		// Вывод содержимого
 	std::string get_item(const int num) {
-		if (num > size - 1) {
-			return 0;
+		if ((num > size - 1) || (num < 0)) {
+			std::cout << "Outside the bounds of the array" << std::endl;
+			return Error;
 		}
 		return item[num];
 	}
@@ -25,19 +27,15 @@ public:
 	void set_item(const std::string *r_item) {
 		item[number++] = *r_item;
 		if (number == size) {
+			size *= 2;
 			newitem = new std::string[size];
-			for (int i = 0; i < size ; ++i) {
+			for (int i = 0; i < size / 2; ++i) {
 				newitem[i] = item[i];
 			}
-			delete[] item;
-			size *= 2;
-			item = new std::string[size];
-			for (int i = 0; i < size / 2; ++i) {
-				item[i] = newitem[i];
-			}
+			std::swap(item, newitem);
 			delete[] newitem;
 		}
-	}
+	}	
 	
 		// Поиск предмета
 	int find_item(const std::string *f_item) {
