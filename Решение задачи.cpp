@@ -10,8 +10,10 @@ private:
 	std::string *item = NULL;
 	std::string *newitem = NULL;
 	std::string Error = "Error";
+	std::string Simple;
 	int number;
 	int size = 10;
+	int flag = 0;
 
 public:
 		// Вывод содержимого
@@ -54,28 +56,19 @@ public:
 				for (int j = i; j < size - 1; ++j) {
 					item[j] = item[j + 1];
 				}
-				item[size - 1] = "";
+				item[size - 1] = Simple;
 				--number;
+				flag = 1;
 				return 1;
 			}
 		}
 		return 0;
 	}
 
-	// Удаление найденных предметов
+	// Удаление всех найденных предметов
 	int delete_item(const std::string *d_item) {
-		int flag = 0;
-		for (int i = 0; i < size; ++i) {
-			if (item[i] == *d_item) {
-				for (int j = i; j < size + 1; ++j) {
-					item[j] = item[j + 1];
-				}
-				item[size - 1] = "";
-				--number;
-				--i;
-				flag = 1;
-			}
-		}
+		flag = 0;
+		while (first_delete_item(d_item) == 1);
 		return flag;
 	}
 
